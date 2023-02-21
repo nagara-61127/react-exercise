@@ -9,8 +9,27 @@ import {
 	faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
+type Item = {
+  itemName: string;
+  quantity: number;
+  isSelected: boolean;
+}
+
+const testItem: Item[] = [
+  {
+    itemName: 'banana',
+    quantity: 3,
+    isSelected: false,
+  },
+  {
+    itemName: 'strawberry',
+    quantity: 3,
+    isSelected: true,
+  },
+]
+
 const App = () => {
-	const [items, setItems] = useState([]);
+	const [items, setItems] = useState(testItem);
 
 	return (
 		<div className="app-background">
@@ -20,6 +39,32 @@ const App = () => {
 					<FontAwesomeIcon icon={faPlus} />
 				</div>
 				<div className="item-list">
+          {items.map((item, index) => (
+            <div className="item-container">
+              <div className="item-name">
+                {item.isSelected ? (
+                  <>
+                    <FontAwesomeIcon icon={faCheckCircle} />
+                    <span className="completed">{item.itemName}</span>
+                  </>
+                ):(
+                  <>
+                    <FontAwesomeIcon icon={faCircle} />
+                    <span>{item.itemName}</span>
+                  </>
+                )}
+              </div>
+              <div className="quantity">
+                <button>
+                  <FontAwesomeIcon icon={faChevronLeft} />
+                </button>
+                <span>{item.quantity}</span>
+                <button>
+                  <FontAwesomeIcon icon={faChevronRight} />
+                </button>
+              </div>
+            </div>
+          ))}
 					<div className="item-container"></div>
 				</div>
 				<div className="total">Total: </div>

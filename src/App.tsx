@@ -18,6 +18,7 @@ type Item = {
 const App = () => {
 	const [items, setItems] = useState<Item[]>([]);
   const [inputValue, setInputValue] = useState("");
+  const [totalItemCount, setTotalItemCount] = useState(0);
 
   const handleAddButtonClick = () => {
     const newItem = {
@@ -29,12 +30,35 @@ const App = () => {
     const newItems = [...items, newItem];
     setItems(newItems);
     setInputValue("");
+    culculateTotal();
   }
 
   const toggleChange = (index: number) => {
     const changeItems = [...items];
     changeItems[index].isSelected = !changeItems[index].isSelected;
-    setItems(changeItems)
+    setItems(changeItems);
+    culculateTotal();
+  }
+
+  const handleChangeQuantity = (index: number, fluctuation: 'increase' | 'decrease') => {
+    const changeItems = [...items];
+    switch(fluctuation) {
+      case 'increase':
+        changeItems[index].quantity++;
+        break;
+      case 'decrease':
+        // ここで0以下にするときはポップアップで消しますか？的なの出したい。
+        changeItems[index].quantity > 0 ? changeItems[index].quantity-- : toggleChange(index);
+        break;
+    }
+    setItems(changeItems);
+    culculateTotal();
+  }
+
+  const culculateTotal = () => {
+    let total = 0;
+    items.map(item => total = total + item.quantity);
+    setTotalItemCount(total);
   }
 
 	return (
@@ -61,11 +85,11 @@ const App = () => {
                 )}
               </div>
               <div className="quantity">
-                <button>
+                <button onClick={() => handleChangeQuantity(index, 'decrease')}>
                   <FontAwesomeIcon icon={faChevronLeft} />
                 </button>
                 <span>{item.quantity}</span>
-                <button>
+                <button onClick={() => handleChangeQuantity(index, 'increase')}>
                   <FontAwesomeIcon icon={faChevronRight} />
                 </button>
               </div>
@@ -73,7 +97,7 @@ const App = () => {
           ))}
 					<div className="item-container"></div>
 				</div>
-				<div className="total">Total: </div>
+				<div className="total">Total: {totalItemCount}</div>
 			</div>
 		</div>
 	);

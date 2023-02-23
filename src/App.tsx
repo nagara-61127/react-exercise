@@ -15,21 +15,8 @@ type Item = {
   isSelected: boolean;
 }
 
-const testItem: Item[] = [
-  {
-    itemName: 'banana',
-    quantity: 3,
-    isSelected: false,
-  },
-  {
-    itemName: 'strawberry',
-    quantity: 3,
-    isSelected: true,
-  },
-]
-
 const App = () => {
-	const [items, setItems] = useState(testItem);
+	const [items, setItems] = useState<Item[]>([]);
 
 	return (
 		<div className="app-background">

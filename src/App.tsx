@@ -17,13 +17,32 @@ type Item = {
 
 const App = () => {
 	const [items, setItems] = useState<Item[]>([]);
+  const [inputValue, setInputValue] = useState("");
+
+  const handleAddButtonClick = () => {
+    const newItem = {
+      itemName: inputValue,
+      quantity: 1,
+      isSelected: false,
+    };
+
+    const newItems = [...items, newItem];
+    setItems(newItems);
+    setInputValue("");
+  }
+
+  const toggleChange = (index: number) => {
+    const changeItems = [...items];
+    changeItems[index].isSelected = !changeItems[index].isSelected;
+    setItems(changeItems)
+  }
 
 	return (
 		<div className="app-background">
 			<div className="main-container">
 				<div className="add-item-box">
-					<input className="add-item-input" placeholder="Add an item..." />
-					<FontAwesomeIcon icon={faPlus} />
+					<input value={inputValue} onChange={(event) => setInputValue(event.target.value)} className="add-item-input" placeholder="Add an item..." />
+					<FontAwesomeIcon icon={faPlus} onClick={() => handleAddButtonClick()} />
 				</div>
 				<div className="item-list">
           {items.map((item, index) => (
@@ -31,12 +50,12 @@ const App = () => {
               <div className="item-name">
                 {item.isSelected ? (
                   <>
-                    <FontAwesomeIcon icon={faCheckCircle} />
+                    <FontAwesomeIcon icon={faCheckCircle} onClick={() => toggleChange(index)} />
                     <span className="completed">{item.itemName}</span>
                   </>
                 ):(
                   <>
-                    <FontAwesomeIcon icon={faCircle} />
+                    <FontAwesomeIcon icon={faCircle} onClick={() => toggleChange(index)} />
                     <span>{item.itemName}</span>
                   </>
                 )}

@@ -42,17 +42,29 @@ const App = () => {
 
   const handleChangeQuantity = (index: number, fluctuation: 'increase' | 'decrease') => {
     const changeItems = [...items];
-    switch(fluctuation) {
+    if(fluctuation==='decrease' && changeItems[index].quantity===0){
+      if(window.confirm('アイテムを削除しますか？')){
+        deleteItem(index);
+      }
+    } else {
+      switch(fluctuation) {
       case 'increase':
         changeItems[index].quantity++;
         break;
       case 'decrease':
-        // ここで0以下にするときはポップアップで消しますか？的なの出したい。
-        changeItems[index].quantity > 0 ? changeItems[index].quantity-- : toggleChange(index);
+        changeItems[index].quantity--;
         break;
+      }
+      setItems(changeItems);
     }
-    setItems(changeItems);
     culculateTotal();
+  }
+
+  const deleteItem = (index: number) => {
+    const test = items;
+    const changeItems = [...items];
+    changeItems.splice(index, 1);
+    setItems(changeItems);
   }
 
   const culculateTotal = () => {

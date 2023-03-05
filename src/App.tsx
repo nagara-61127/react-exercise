@@ -9,6 +9,7 @@ import {
   faCheckCircle,
   faPlus,
 } from '@fortawesome/free-solid-svg-icons';
+import Sanmoku from './sanmoku-narabe';
 import ShoppingList from './shopping-list';
 
 type appInfo = {
@@ -27,11 +28,16 @@ const App = () => {
   const appList: appInfo[] = [
     {
       id: 0,
+      enName: 'sanmoku-narabe',
+      jpName: '三目並べ',
+    },
+    {
+      id: 1,
       enName: 'shopping-list',
       jpName: '買い物リスト',
     },
     {
-      id: 1,
+      id: 2,
       enName: 'on-develop',
       jpName: '開発中',
     },
@@ -53,7 +59,13 @@ const App = () => {
           ))}
         </ul>
       </div>
-      {display == 'shopping-list' ? <ShoppingList /> : <p>開発中です</p>}
+      {display === 'sanmoku-narabe' ? (
+        <Sanmoku />
+      ) : display == 'shopping-list' ? (
+        <ShoppingList />
+      ) : (
+        <p>開発中です</p>
+      )}
     </div>
   );
 };

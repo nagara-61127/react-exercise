@@ -1,5 +1,6 @@
 * {
   font-size: 26px;
+  font: 14px 'Century Gothic', Futura, sans-serif;
 }
 
 body {
@@ -25,8 +26,9 @@ body {
 }
 
 .app-item {
+  font-size: 18px;
   float: left;
-  margin-right: 0.5rem;
+  margin-right: 1rem;
   cursor: pointer;
 }
 

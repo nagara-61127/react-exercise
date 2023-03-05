@@ -1,5 +1,5 @@
 * {
-  font-size: 36px;
+  font-size: 26px;
 }
 
 body {
@@ -7,6 +7,31 @@ body {
   padding: 0;
   font-family: sans-serif;
   color: white;
+}
+
+.base {
+}
+
+.header {
+  background-color: #505050;
+  display: flex;
+  height: 50px;
+}
+
+.app-list {
+  list-style: none;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.app-item {
+  float: left;
+  margin-right: 0.5rem;
+  cursor: pointer;
+}
+
+.selected {
+  border-bottom: 2px solid #1c88db;
 }
 
 .App {
@@ -19,7 +44,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: calc(100vh - 50px);
 }
 
 .main-container {

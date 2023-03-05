@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './reset.css';
 import './index.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -8,127 +9,68 @@ import {
   faCheckCircle,
   faPlus,
 } from '@fortawesome/free-solid-svg-icons';
+import ShoppingList from './shopping-list';
 
-type Item = {
-  itemName: string;
-  quantity: number;
-  isSelected: boolean;
+type appInfo = {
+  id: number;
+  enName: string;
+  jpName: string;
 };
 
 const App = () => {
-  const [items, setItems] = useState<Item[]>([]);
-  const [inputValue, setInputValue] = useState('');
-  const [totalItemCount, setTotalItemCount] = useState(0);
+  const [display, setDisplay] = useState<string>('shopping-list');
 
-  const handleAddButtonClick = () => {
-    const newItem = {
-      itemName: inputValue,
-      quantity: 1,
-      isSelected: false,
-    };
-
-    const newItems = [...items, newItem];
-    setItems(newItems);
-    setInputValue('');
-    culculateTotal();
+  const switchDisplay = (changeTo: string) => {
+    setDisplay(changeTo);
   };
 
-  const toggleChange = (index: number) => {
-    const changeItems = [...items];
-    changeItems[index].isSelected = !changeItems[index].isSelected;
-    setItems(changeItems);
-    culculateTotal();
-  };
-
-  const handleChangeQuantity = (
-    index: number,
-    fluctuation: 'increase' | 'decrease'
-  ) => {
-    const changeItems = [...items];
-    if (fluctuation === 'decrease' && changeItems[index].quantity === 0) {
-      if (window.confirm('アイテムを削除しますか？')) {
-        deleteItem(index);
-      }
-    } else {
-      switch (fluctuation) {
-        case 'increase':
-          changeItems[index].quantity++;
-          break;
-        case 'decrease':
-          changeItems[index].quantity--;
-          break;
-      }
-      setItems(changeItems);
-    }
-    culculateTotal();
-  };
-
-  const deleteItem = (index: number) => {
-    const changeItems = [...items];
-    changeItems.splice(index, 1);
-    setItems(changeItems);
-  };
-
-  const culculateTotal = () => {
-    let total = 0;
-    items.map((item) => (total = total + item.quantity));
-    setTotalItemCount(total);
-  };
+  const appList: appInfo[] = [
+    {
+      id: 0,
+      enName: 'shopping-list',
+      jpName: '買い物リスト',
+    },
+    {
+      id: 1,
+      enName: 'on-develop',
+      jpName: '開発中',
+    },
+  ];
 
   return (
-    <div className="app-background">
-      <div className="main-container">
-        <div className="add-item-box">
-          <input
-            value={inputValue}
-            onChange={(event) => setInputValue(event.target.value)}
-            className="add-item-input"
-            placeholder="Add an item..."
-          />
-          <FontAwesomeIcon
-            icon={faPlus}
-            onClick={() => handleAddButtonClick()}
-          />
-        </div>
-        <div className="item-list">
-          {items.map((item, index) => (
-            <div className="item-container">
-              <div className="item-name">
-                {item.isSelected ? (
-                  <>
-                    <FontAwesomeIcon
-                      icon={faCheckCircle}
-                      onClick={() => toggleChange(index)}
-                    />
-                    <span className="completed">{item.itemName}</span>
-                  </>
-                ) : (
-                  <>
-                    <FontAwesomeIcon
-                      icon={faCircle}
-                      onClick={() => toggleChange(index)}
-                    />
-                    <span>{item.itemName}</span>
-                  </>
-                )}
-              </div>
-              <div className="quantity">
-                <button onClick={() => handleChangeQuantity(index, 'decrease')}>
-                  <FontAwesomeIcon icon={faChevronLeft} />
-                </button>
-                <span>{item.quantity}</span>
-                <button onClick={() => handleChangeQuantity(index, 'increase')}>
-                  <FontAwesomeIcon icon={faChevronRight} />
-                </button>
-              </div>
-            </div>
+    <div className="base">
+      <div className="header">
+        <ul className="app-list">
+          {appList.map((app, index) => (
+            <li
+              className={
+                'app-item ' + (display === app.enName ? 'selected' : '')
+              }
+              onClick={() => switchDisplay(app.enName)}
+            >
+              {app.jpName}
+            </li>
           ))}
-          <div className="item-container"></div>
-        </div>
-        <div className="total">Total: {totalItemCount}</div>
+        </ul>
       </div>
+      {display == 'shopping-list' ? <ShoppingList /> : <p>開発中です</p>}
     </div>
   );
 };
+
+{
+  /* <li
+            className={'app-item ' + (display === 'test' ? 'selected' : '')}
+            onClick={() => switchDisplay('test')}
+          >
+            test
+          </li>
+          <li
+            className={'app-item ' + (display === 'aiueo' ? 'selected' : '')}
+            onClick={() => switchDisplay('aiueo')}
+          >
+            aiueo
+          </li> */
+}
 
 export default App;

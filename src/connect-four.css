@@ -1,0 +1,38 @@
+.connect-four {
+  width: 50vw;
+}
+
+.status {
+  text-align: center;
+  font-size: 30px;
+}
+
+.board {
+  text-align: center;
+}
+
+.circle {
+  width: 12%;
+  aspect-ratio: 1/1;
+  border: 1px solid #000;
+  border-radius: 50%;
+  background-color: #fff;
+}
+
+.filled-a {
+  background-color: red;
+}
+
+.filled-b {
+  background-color: yellow;
+}
+
+.restart {
+  float: right;
+  margin-right: 30px;
+  color: black;
+}
+
+.restart:hover {
+  color: #505050;
+}

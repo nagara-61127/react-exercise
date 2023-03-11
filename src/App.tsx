@@ -11,6 +11,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import Sanmoku from './sanmoku-narabe';
 import ShoppingList from './shopping-list';
+import ConnectFour from './connect-four';
 
 type appInfo = {
   id: number;
@@ -19,7 +20,7 @@ type appInfo = {
 };
 
 const App = () => {
-  const [display, setDisplay] = useState<string>('shopping-list');
+  const [display, setDisplay] = useState<string>('sanmoku-narabe');
 
   const switchDisplay = (changeTo: string) => {
     setDisplay(changeTo);
@@ -38,6 +39,11 @@ const App = () => {
     },
     {
       id: 2,
+      enName: 'connect-four',
+      jpName: 'コネクトフォー',
+    },
+    {
+      id: 3,
       enName: 'on-develop',
       jpName: '開発中',
     },
@@ -59,13 +65,17 @@ const App = () => {
           ))}
         </ul>
       </div>
-      {display === 'sanmoku-narabe' ? (
-        <Sanmoku />
-      ) : display == 'shopping-list' ? (
-        <ShoppingList />
-      ) : (
-        <p>開発中です</p>
-      )}
+      <div className="app-background">
+        {display === 'sanmoku-narabe' ? (
+          <Sanmoku />
+        ) : display == 'shopping-list' ? (
+          <ShoppingList />
+        ) : display == 'connect-four' ? (
+          <ConnectFour />
+        ) : (
+          <p>開発中です</p>
+        )}
+      </div>
     </div>
   );
 };
